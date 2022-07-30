@@ -1,0 +1,7 @@
+#+title: README
+* Looking for nix tutorials?
+The =tutorials= folder contains sub-folders that each represent a distinct tutorial.
+* Contributing
+If you would like to contribute your own tutorial, please refer to =CONTRIBUTING.org=
+* License
+All of the content in this repository is under the MIT license (just like NixOS!)

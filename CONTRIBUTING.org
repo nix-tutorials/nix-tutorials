@@ -1,0 +1,12 @@
+#+TITLE: CONTRIBUTING
+
+* So you want to make a nix tutorial?
++ Fork this repository
++ create a branch with your changes, =git branch -b "mybranch"=
++ Add a directory with the name of your tutorial in the =tutorials= folder
++ Add a README within the directory
++ Add any other content you want to the directory
++ Add your tutorial and a short summary to the tutorial [[file:tutorials/README.md][README]]
++ Make a pull request
+** Guidelines
++ Please avoid spaces in folder names, use underscores instead

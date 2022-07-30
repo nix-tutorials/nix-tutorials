@@ -1,0 +1,35 @@
+#+TITLE: A flake-y introduction to nix
+* Part 1: what is a flake anyway?
+A flake is any project with a =flake.nix= file present in its root directory. This file describes the =inputs= and =outputs= of a program. The =flake.nix= is responsible for determining the output of many nix commands, such as =nix develop= and =nix build=. Flakes are advantageous over the old =default.nix= and =shell.nix= because they automatically manage all of the dependencies, which can be extremely useful in projects that are larger in size. They are also "pure" by default, making them reproducible.
+** What are inputs?
+The flake =inputs= attribute is description of your programs dependencies. Practically, the inputs are a list of urls that tell the flake what it needs to create =outputs=. These urls can link to other flakes, or other, "normal" projects.
+The [[https://nixos.wiki/wiki/Flakes#Input_schema][Input Schema]] section of the Flakes wiki page provides a detailed description of how the inputs should look, but for now here is a quick example:
+#+begin_src nix
+{
+
+inputs = {
+  # a flake dependency
+  dream2nix.url = https://github.com/nix-community/dream2nix
+  # a non-flake dependency
+  tauri = {
+            url = https://github.com/tauri-apps/tauri;
+            flake = false;
+  };
+};
+
+}
+#+end_src
+We created 2 inputs, =dream2nix= and =tauri=. When a flake is built interacted with for the first time, it generates a =flake.lock= file which "locks" all of these inputs. This means that if the flake is built from another machine, the result should be /exactly/ the same!
+** What are outputs?
+The =outputs= attribute of a flake is essentially a list of derivations. The outputs of a flake can include packages, checks, and shells. See the [[https://nixos.wiki/wiki/Flakes#Output_schema][Output Schema]] for more details.
+*** What's a derivation?
+A derivation is a set of instructions of how to build a program. A derivation is recursive, meaning that it can contain other derivations. All of these derivations build upon each other, combining into a final derivation. This is the concept at the heart of the nix package manager. Every package definition in the [[https://github.com/NixOS/nixpkgs][nixpkgs]] repository is a derivation.
+
+In the =flake.nix=, a derivation is usually created using the =pkgs.stdenv.mkDerivation= builder. Here is a quick example:
+#+begin_src nix
+packages.x86-64-linux = with pkgs; stdenv.mkDerivation {
+  name = "myDerivation";
+  buildInputs = [ rustc ];
+};
+#+end_src
+We'll go into more detail later when we build an example package.

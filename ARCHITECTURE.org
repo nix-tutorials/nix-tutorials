@@ -1,0 +1,6 @@
+#+TITLE: Architecture
+* Current Status
+Currently the repository is not set up to support github pages. It is simply a set of folders with READMEs and extra content.
+
+* Future plans
+I plan to keep the folder setup the same, but add a couple github actions that will organize the content into the github wiki, as well as a custom static site generated with pandoc.
